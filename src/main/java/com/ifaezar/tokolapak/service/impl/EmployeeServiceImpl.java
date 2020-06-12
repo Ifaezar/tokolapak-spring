@@ -33,7 +33,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	@Transactional
 	public Employee updateEmployeeAddress(Employee employee) {
-		//employeeAddress.getEmployee().setEmployeeAddress(employeeAddress);
 		return employeeRepo.save(employee);
 	}
 
