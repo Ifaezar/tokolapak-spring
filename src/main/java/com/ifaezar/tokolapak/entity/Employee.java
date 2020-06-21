@@ -1,11 +1,16 @@
 package com.ifaezar.tokolapak.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -24,11 +29,29 @@ public class Employee {
 	@JoinColumn(name = "department_id")
 	private Department department;
 	
+	public List<Project> getProjects() {
+		return Projects;
+	}
+	public void setProjects(List<Project> projects) {
+		Projects = projects;
+	}
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	@JoinTable(name = "project_employee",joinColumns = @JoinColumn(name = "employee_id"), 
+	inverseJoinColumns = @JoinColumn(name = "project_id"))
+	private List<Project> Projects;
+	
 	public EmployeeAddress getEmployeeAddress() {
 		return employeeAddress;
 	}
 	public void setEmployeeAddress(EmployeeAddress employeeAddress) {
 		this.employeeAddress = employeeAddress;
+	}
+	public Department getDepartment() {
+		return department;
+	}
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	private String employeeName;
 	private String email;

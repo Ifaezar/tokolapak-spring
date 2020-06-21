@@ -9,5 +9,4 @@ import com.ifaezar.tokolapak.entity.Product;
 public interface EmployeeService{
 	
 	public void deleteEmployeeAddress(EmployeeAddress employeAddress);
-	public Employee updateEmployeeAddress(Employee employee);
 }

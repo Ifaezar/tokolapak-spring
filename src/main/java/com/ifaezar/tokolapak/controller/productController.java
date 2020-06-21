@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifaezar.tokolapak.dao.ProductRepo;
@@ -18,8 +19,8 @@ import com.ifaezar.tokolapak.service.ProductService;
 @RestController
 public class productController {
 	
-	//@Autowired
-	//private ProductRepo productRepo;
+	@Autowired
+	private ProductRepo productRepo;
 	
 	@Autowired
 	private ProductService productService;
@@ -52,5 +53,11 @@ public class productController {
 	@GetMapping("/productName/{productName}")
 	public Product getProductByProductName(@PathVariable String productName) {
 		return productService.getProductByProductName(productName);
+	}
+	
+	@GetMapping("/products/custom")
+	public Iterable<Product> customQueryGet(@RequestParam double minPrice, @RequestParam String name){
+		return productRepo.findByMaxPrice(minPrice, name);
+		
 	}
 }

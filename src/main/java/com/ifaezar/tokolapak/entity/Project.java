@@ -1,7 +1,6 @@
 package com.ifaezar.tokolapak.entity;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,23 +8,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+
 @Entity
-public class Department {
+public class Project {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private int id;
-	
-	private String name;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department", cascade	= CascadeType.ALL)
-	@JsonIgnore
-	private List<Employee> employee; //SET -> Array yg usunya unik
 	
 	public int getId() {
 		return id;
@@ -43,17 +39,22 @@ public class Department {
 		this.name = name;
 	}
 
-	public List<Employee> getEmployee() {
-		return employee;
+	public List<Employee> getEmployees() {
+		return employees;
 	}
 
-	public void setEmployee(List<Employee> employee) {
-		this.employee = employee;
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
 	}
+
+	private String name;
 	
-	
-	
-	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	@JoinTable(name = "project_employee",joinColumns = @JoinColumn(name = "project_id"), 
+	inverseJoinColumns = @JoinColumn(name = "employee_id"))
+	@JsonIgnore
+	private List<Employee> employees;
 	
 	
 }
