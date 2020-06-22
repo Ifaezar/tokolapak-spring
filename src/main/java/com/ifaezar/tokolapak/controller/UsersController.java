@@ -37,7 +37,7 @@ public class UsersController {
 		String encodedPassword = pwEncoder.encode(user.getPassword());
 		
 		user.setPassword(encodedPassword);
-		this.emailUtil.sendEmail(user.getEmail(), "Testing", "<h1>Silahkan klik <a href = \"http://localhost:8080/users/sukses/"+user.getEmail()+"\">Link<a> untuk verifikasi</h1>");
+		this.emailUtil.sendEmail(user.getEmail(), "Testing", "<h1>Silahkan klik <a href = \"http://localhost:8080/users/sukses/"+user.getEmail()+"\">Link<a> untuk verifikasi Email Anda</h1>");
 		
 		return userRepo.save(user);
 	}
