@@ -26,7 +26,7 @@ public class UsersController {
 	
 	private PasswordEncoder pwEncoder= new BCryptPasswordEncoder();
 	
-	private boolean isOpen = false;
+
 	
 	@Autowired
 	private EmailUtil emailUtil;
@@ -44,7 +44,7 @@ public class UsersController {
 	
 	@GetMapping("/sukses/{email}")
 	public String loginSuccess( @PathVariable String email) {
-		isOpen = true;
+		
 		User findEmail = userRepo.findByEmail(email).get();
 		findEmail.setIsVerified("verified");
 		userRepo.save(findEmail);
