@@ -51,6 +51,8 @@ public class EmployeeController {
 			throw new RuntimeException("Employee Not Found");
 		}
 		employee.setDepartment(findDepartment);
+		//send email after registration
+		//emailUtil.sendEmail(employee.getEmail(),subject, body);
 		return employeeRepo.save(employee);
 	}
 	

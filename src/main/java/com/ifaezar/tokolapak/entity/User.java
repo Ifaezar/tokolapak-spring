@@ -15,6 +15,22 @@ public class User {
 	
 	private String username;
 	
+	private String email;
+	
+	private String isVerified;
+	
+	public String getIsVerified() {
+		return isVerified;
+	}
+	public void setIsVerified(String isVerified) {
+		this.isVerified = isVerified;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	private String profilePicture;
 	
 	private String password;
