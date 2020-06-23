@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifaezar.tokolapak.dao.DepartmnetRepo;
+import com.ifaezar.tokolapak.dao.EmployeeRepo;
 import com.ifaezar.tokolapak.entity.Department;
 import com.ifaezar.tokolapak.service.DepartmentService;
 
@@ -24,6 +25,9 @@ public class DepartmentController {
 	@Autowired
 	private DepartmnetRepo departmentRepo;
 	
+	@Autowired
+	private EmployeeRepo employeeRepo;
+	
 	@GetMapping
 	public Iterable<Department> getAllDepartments(){
 		return departmentService.getAllDepartments();
@@ -34,8 +38,16 @@ public class DepartmentController {
 		return departmentService.AddDeparment(department);
 	}
 	
-//	@DeleteMapping("/{departmentId}")
-//	public void DeleteDepartment(@PathVariable int departmentId) {
-//		Department findDepartment = 
-//	}
+	@DeleteMapping("{departmentId}")
+	public void deleteDataDepartment(@PathVariable int departmentId) {
+		Department findDeparment = departmentRepo.findById(departmentId).get();
+		findDeparment.getEmployee().forEach(employee ->{
+			employee.setDepartment(null);
+			employeeRepo.save(employee);
+		});
+		findDeparment.setEmployee(null);
+		
+		departmentRepo.deleteById(departmentId);;
+		
+	}
 }

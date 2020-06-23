@@ -37,9 +37,14 @@ public class UsersController {
 		String encodedPassword = pwEncoder.encode(user.getPassword());
 		
 		user.setPassword(encodedPassword);
+		User savedUser = userRepo.save(user);
+		
+		String message = "<h1>Selamat! Registrasi berhasil</h1>\n";
+		message += "Akun dengan username " + user.getUsername() + "telah terdaftar";
+		
 		this.emailUtil.sendEmail(user.getEmail(), "Testing", "<h1>Silahkan klik <a href = \"http://localhost:8080/users/sukses/"+user.getEmail()+"\">Link<a> untuk verifikasi Email Anda</h1>");
 		
-		return userRepo.save(user);
+		return savedUser;
 	}
 	
 	@GetMapping("/sukses/{email}")
